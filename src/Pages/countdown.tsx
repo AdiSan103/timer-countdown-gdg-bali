@@ -27,7 +27,7 @@ const Countdown = () => {
   return (
     <FullScreenLayout>
       <div className="bg-white dark:bg-black transition min-h-screen">
-        <div className="grid lg:grid-cols-4 grid-cols-2 gap-2 p-2">
+        <div className="grid lg:grid-cols-4 grid-cols-2 gap-2 px-4 py-5">
           {timers.map((timer, index) => (
             <CardTimer countTimer={timer} key={index} id={index} />
           ))}

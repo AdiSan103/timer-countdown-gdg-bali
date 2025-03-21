@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { addTimer } from "@/utils/timer-local-storage";
 import FullScreenToggleButton from "@/components/full-screen-toggle-button";
 import { ModeToggle } from "@/components/theme-mode-toggle";
+import { ThemeProvider } from "@/components/theme-provider";
 
 interface FullScreenLayoutProps {
   children: React.ReactNode;
@@ -70,7 +71,7 @@ const FullScreenLayout: React.FC<FullScreenLayoutProps> = ({ children }) => {
     }
   };
 
-  // ----------------------- Logic Timer ---------------------------------
+  // #region Timer Logic
 
   const [newSeconds, setNewSeconds] = useState<number>(0);
   const [newMinutes, setNewMinutes] = useState<number>(0);
@@ -86,25 +87,26 @@ const FullScreenLayout: React.FC<FullScreenLayoutProps> = ({ children }) => {
     setNewHours(0);
   };
 
-  return (
-    <div
-      ref={fullScreenRef}
-      className={`w-full h-screen flex flex-col transition-colors duration-300 ${
-        isFullScreen ? "" : ""
-      }`}
-    >
-      <main>
-        <div className="mb-4">{children}</div>
-        <div className="fixed bottom-2 right-2 flex gap-2 z-99">
-          <ModeToggle />
+  // #endregion Timer Logic
 
-          <div className="fixed bottom-2 right-2 flex gap-2 z-99">
+  return (
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <div
+        ref={fullScreenRef}
+        className={`w-full h-screen flex flex-col transition-colors duration-300 ${
+          isFullScreen ? "" : ""
+        }`}
+      >
+        <main>
+          <div>{children}</div>
+          <div className="fixed bottom-2 right-2 flex gap-2 z-49">
             <ModeToggle />
 
             <FullScreenToggleButton
               isFullScreen={isFullScreen}
               onToggle={toggleFullScreen}
             />
+
             {/* Button Add Form */}
             <Dialog>
               <DialogTrigger asChild>
@@ -152,9 +154,9 @@ const FullScreenLayout: React.FC<FullScreenLayoutProps> = ({ children }) => {
               </DialogContent>
             </Dialog>
           </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </ThemeProvider>
   );
 };
 
